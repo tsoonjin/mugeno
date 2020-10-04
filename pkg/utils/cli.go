@@ -1,16 +1,17 @@
-package utils
+package cli
 
 import (
-     "fmt"
-     "github.com/spf13/cobra"
+     "github.com/thatisuday/commando"
 )
 
-func NewCLI(app string, desc string) {
-    return &cobra.Command {
-        Use: app,
-        Short: desc,
-        Run: func (cmd *cobra.Command, args []string) {
-            fmt.Printf("Running %s\n", app)
-        },
-    }
+type CLIConfig struct {
+    arguments [][]string
+}
+
+func Create(name string, version string, desc string) *commando.CommandRegistry {
+    var app = commando.
+        SetExecutableName(name).
+        SetVersion(version).
+        SetDescription(desc)
+    return app
 }

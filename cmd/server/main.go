@@ -7,6 +7,7 @@ import (
     "log"
     "os"
     "github.com/joho/godotenv"
+    "github.com/tsoonjin/mugeno/pkg/rss"
     "github.com/go-chi/chi"
     "github.com/go-chi/chi/middleware"
 )
@@ -43,6 +44,17 @@ func main() {
         w.Write([]byte("OK"))
     })
 
+    // Handler RSS request
+    r.Route("/rss", func(r chi.Router) {
+        r.Get("/", ListRSS)
+    })
+
     // Run Server
     http.ListenAndServe(fmt.Sprintf(":%v", config.ServerPort), r)
+}
+
+
+func ListRSS(w http.ResponseWriter, r *http.Request) {
+    urls := rss.List("test")
+    fmt.Println(urls)
 }
